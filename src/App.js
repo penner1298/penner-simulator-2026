@@ -1,26 +1,65 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { DollarSign, Users, ChevronRight, Check, X, Vote, Sparkles, Loader2, TrendingUp, AlertTriangle, ArrowRight, Heart, Wrench, Scale, Brain, Share2, Trophy, Flame, History, Globe, Activity, Lock, RotateCcw, ChevronDown, Shield, Mail, CreditCard, Gavel, AlertCircle, MousePointer2, RefreshCw, Truck, TreePine, GraduationCap, Home, Briefcase } from 'lucide-react';
+import { DollarSign, Users, ChevronRight, Check, X, Vote, Sparkles, Loader2, TrendingUp, AlertTriangle, ArrowRight, Heart, Wrench, Scale, Brain, Share2, Trophy, Flame, History, Globe, Activity, Lock, RotateCcw, ChevronDown, Shield, Mail, CreditCard, Gavel, AlertCircle, MousePointer2, RefreshCw } from 'lucide-react';
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "firebase/auth";
 import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 // --- FIREBASE CONFIGURATION ---
-const firebaseConfig = JSON.parse(__firebase_config);
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+// This safely handles both Vercel (real) and CodeSandbox (demo) environments
+let firebaseConfig;
+let isDemoMode = false;
+
+// Detect environment
+if (typeof __firebase_config !== 'undefined') {
+  try {
+    firebaseConfig = JSON.parse(__firebase_config);
+  } catch (e) {
+    console.error("Failed to parse firebase config", e);
+    isDemoMode = true;
+  }
+} else {
+  isDemoMode = true;
+}
+
+// If demo mode or config failed, use dummy values to prevent crash on init
+if (isDemoMode || !firebaseConfig) {
+  firebaseConfig = {
+    apiKey: "AIzaSyDummyKey-For-Demo-Only",
+    authDomain: "demo.firebaseapp.com",
+    projectId: "demo",
+    storageBucket: "demo.appspot.com",
+    messagingSenderId: "123456789",
+    appId: "1:123456789:web:abcdef"
+  };
+}
+
+// --- SAFE INITIALIZATION ---
+let app;
+try {
+  if (getApps().length === 0) {
+    app = initializeApp(firebaseConfig);
+  } else {
+    app = getApp();
+  }
+} catch (e) {
+  console.error("Firebase init error:", e);
+}
+
+const auth = app ? getAuth(app) : null;
+const db = app ? getFirestore(app) : null;
 const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
 // --- GAME CONFIGURATION ---
 const FREEZE_DATE = new Date('2025-12-13T00:00:00');
 const IS_FUNDRAISING_ALLOWED = new Date() < FREEZE_DATE;
-const DONATION_URL = "https://www.efundraisingconnections.com/c/JoshPenner"; 
+const DONATION_URL = "https://votepenner.com/donate"; 
 
 // GEMINI API SETUP
 const apiKey = ""; 
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
 const callGemini = async (prompt) => {
+  if (!apiKey) return "AI Advisor is unavailable in this demo.";
   try {
     const response = await fetch(GEMINI_URL, {
       method: 'POST',
@@ -69,35 +108,9 @@ const ARCHETYPES = {
   }
 };
 
-// --- MASTER DATA DECK (EXPANDED) ---
+// --- MASTER DATA DECK ---
 const MASTER_DECK = [
-  // --- BUDGET & FISCAL ---
-  {
-    id: 'fiscal_1',
-    category: 'Budget',
-    title: "The Rainy Day Fund",
-    description: "Revenue is down. The Governor wants to tap the Rainy Day Fund immediately rather than cut waste.",
-    left: { label: "Audit First", forecast: "📉 Sustainable", budget: 5, voters: -5, pennerPoints: 1, feedback: "You identified unspent accounts to cover the shortfall. It wasn't a windfall, but it stopped the raid." },
-    right: { label: "Raid Fund", forecast: "💸 Kick Can", budget: -15, voters: 5, pennerPoints: 0, feedback: "We survived today, but the state is exposed for the next recession." },
-    pennerStance: 'left',
-    pennerContext: "We can't treat reserves like a checking account. We must audit before we raid.",
-    reality: "Fact: Legislature depleted reserves in 2020 & 2025.",
-    communityStats: 65,
-    color: "bg-slate-700"
-  },
-  {
-    id: 'fiscal_2',
-    category: 'Budget',
-    title: "Capital Gains Expansion",
-    description: "A bill to lower the Capital Gains tax threshold to $25,000 to capture small business sales.",
-    left: { label: "Block It", forecast: "🛡️ Protect Biz", budget: -5, voters: 15, pennerPoints: 1, feedback: "Small business owners breathe a sigh of relief." },
-    right: { label: "Pass It", forecast: "💰 Revenue", budget: 20, voters: -25, pennerPoints: 0, feedback: "Revenue spikes, but doctors and shop owners start leaving the state." },
-    pennerStance: 'left',
-    pennerContext: "An income tax by any other name is still an income tax. I voted NO.",
-    reality: "Fact: SB 5096 passed in 2021 (7% tax).",
-    communityStats: 72,
-    color: "bg-slate-800"
-  },
+  // --- BUDGET SAVERS ---
   {
     id: 'fiscal_5',
     category: 'Budget',
@@ -130,17 +143,42 @@ const MASTER_DECK = [
     title: "Close Tax Loophole",
     description: "Out-of-state banks utilize a loophole to avoid B&O tax. Close it?",
     left: { label: "Keep Loophole", forecast: "🛡️ Lobbyist Win", budget: -5, voters: -5, pennerPoints: 0, feedback: "Lobbyists are happy, but main street pays the difference." },
-    right: { label: "Close It", forecast: "⚖️ Fairness", budget: 20, voters: 15, pennerPoints: 1, feedback: "Fairness restored. Revenue collected without hurting local biz." },
+    right: { label: "Close It", forecast: "⚖️ Fairness", budget: 25, voters: 15, pennerPoints: 1, feedback: "Fairness restored. Revenue collected without hurting local biz." },
     pennerStance: 'right',
     pennerContext: "Tax fairness matters. Out-of-state giants shouldn't pay less than local mom-and-pops.",
     reality: "Fact: Various B&O preferences reviewed annually.",
     communityStats: 80,
     color: "bg-indigo-700"
   },
-
-  // --- SMART GOVERNMENT ---
+  // --- ORIGINAL DECK ---
   {
-    id: 'smart_3',
+    id: 'fiscal_1',
+    category: 'Budget',
+    title: "The Rainy Day Fund",
+    description: "Revenue is down. The Governor wants to tap the Rainy Day Fund immediately rather than cut waste.",
+    left: { label: "Audit First", forecast: "📉 Sustainable", budget: 5, voters: -5, pennerPoints: 1, feedback: "You identified unspent accounts to cover the shortfall. It wasn't a windfall, but it stopped the raid." },
+    right: { label: "Raid Fund", forecast: "💸 Kick Can", budget: -15, voters: 5, pennerPoints: 0, feedback: "We survived today, but the state is exposed for the next recession." },
+    pennerStance: 'left',
+    pennerContext: "We can't treat reserves like a checking account. We must audit before we raid.",
+    reality: "Fact: Legislature depleted reserves in 2020 & 2025.",
+    communityStats: 65,
+    color: "bg-slate-700"
+  },
+  {
+    id: 'fiscal_2',
+    category: 'Budget',
+    title: "Capital Gains Expansion",
+    description: "A bill to lower the Capital Gains tax threshold to $25,000 to capture small business sales.",
+    left: { label: "Block It", forecast: "🛡️ Protect Biz", budget: -5, voters: 15, pennerPoints: 1, feedback: "Small business owners breathe a sigh of relief." },
+    right: { label: "Pass It", forecast: "💰 Revenue", budget: 20, voters: -25, pennerPoints: 0, feedback: "Revenue spikes, but doctors and shop owners start leaving the state." },
+    pennerStance: 'left',
+    pennerContext: "An income tax by any other name is still an income tax. I voted NO.",
+    reality: "Fact: SB 5096 passed in 2021 (7% tax).",
+    communityStats: 72,
+    color: "bg-slate-800"
+  },
+  {
+    id: 'fiscal_3',
     category: 'Smart Gov',
     title: "The 85/15 Proposal",
     description: "Agencies want a fee hike for 'Admin Costs'. You propose capping admin overhead at 15%.",
@@ -153,7 +191,7 @@ const MASTER_DECK = [
     color: "bg-emerald-800"
   },
   {
-    id: 'smart_4',
+    id: 'fiscal_4',
     category: 'Smart Gov',
     title: "Zombie Programs",
     description: "A $50M grant program has failed its metrics for 3 years. Renew or Kill?",
@@ -165,21 +203,6 @@ const MASTER_DECK = [
     communityStats: 85,
     color: "bg-amber-800"
   },
-  {
-    id: 'smart_8',
-    category: 'Smart Gov',
-    title: "Paperless Permitting",
-    description: "Force counties to adopt digital permitting to speed up housing. Counties object to 'preemption'.",
-    left: { label: "Local Control", forecast: "🐢 Slow", budget: 0, voters: -10, pennerPoints: 0, feedback: "Housing remains delayed. Paper stacks grow." },
-    right: { label: "Mandate Digital", forecast: "⚡ Speed", budget: -5, voters: 20, pennerPoints: 1, feedback: "Permits move 40% faster. Builders get to work." },
-    pennerStance: 'right',
-    pennerContext: "Efficiency is compassion. We can't solve the housing crisis with fax machines.",
-    reality: "Fact: Permit delays add $50k to new home costs.",
-    communityStats: 90,
-    color: "bg-cyan-700"
-  },
-
-  // --- PROMISE OF CARE ---
   {
     id: 'care_1',
     category: 'Care',
@@ -220,21 +243,6 @@ const MASTER_DECK = [
     color: "bg-purple-900"
   },
   {
-    id: 'care_11',
-    category: 'Care',
-    title: "Foster Care Stipends",
-    description: "Foster parents are quitting. Increase stipends to cover inflation?",
-    left: { label: "Hold Rates", forecast: "📉 Crisis", budget: 5, voters: -20, pennerPoints: 0, feedback: "More kids end up in hotels. The system is breaking." },
-    right: { label: "Increase", forecast: "🏠 Stability", budget: -10, voters: 15, pennerPoints: 1, feedback: "Families stay in the system. Kids get stable homes." },
-    pennerStance: 'right',
-    pennerContext: "We are the parents of last resort. We cannot fail these children.",
-    reality: "Fact: Foster homes down 20% over 5 years.",
-    communityStats: 88,
-    color: "bg-pink-700"
-  },
-
-  // --- PUBLIC SAFETY ---
-  {
     id: 'safety_1',
     category: 'Safety',
     title: "Pursuit Reform",
@@ -273,103 +281,8 @@ const MASTER_DECK = [
     communityStats: 90,
     color: "bg-green-800"
   },
-  {
-    id: 'safety_12',
-    category: 'Safety',
-    title: "Retail Theft Taskforce",
-    description: "Organized retail theft is closing stores. Fund a dedicated state prosecutor?",
-    left: { label: "Local Issue", forecast: "📉 Closures", budget: 0, voters: -15, pennerPoints: 0, feedback: "Local shops close. Neighborhoods lose access to goods." },
-    right: { label: "Fund It", forecast: "🛡️ Action", budget: -5, voters: 15, pennerPoints: 1, feedback: "Rings disrupted. Businesses feel safe to stay open." },
-    pennerStance: 'right',
-    pennerContext: "This isn't petty shoplifting; it's organized crime costing us billions.",
-    reality: "Fact: Retail theft costs WA $2.7B annually.",
-    communityStats: 82,
-    color: "bg-zinc-800"
-  },
-  {
-    id: 'safety_13',
-    category: 'Safety',
-    title: "Judicial Discretion",
-    description: "Judges are releasing repeat offenders due to rigid sentencing guidelines. Restore discretion?",
-    left: { label: "Keep Rigid", forecast: "🔄 Revolving Door", budget: 0, voters: -20, pennerPoints: 0, feedback: "The same offenders are back on the street the next day." },
-    right: { label: "Restore Power", forecast: "⚖️ Justice", budget: 0, voters: 10, pennerPoints: 1, feedback: "Judges can now hold dangerous individuals accountable." },
-    pennerStance: 'right',
-    pennerContext: "Judges need the tools to keep dangerous people off our streets.",
-    reality: "Fact: Sentencing guidelines often limit judicial options.",
-    communityStats: 75,
-    color: "bg-slate-800"
-  },
-
-  // --- HOUSING & CONSTRUCTION ---
-  {
-    id: 'housing_1',
-    category: 'Housing',
-    title: "Condo Liability Reform",
-    description: "Builders won't build affordable condos due to lawsuit risk. Reform liability laws?",
-    left: { label: "Keep Laws", forecast: "🚫 No Condos", budget: 0, voters: -10, pennerPoints: 0, feedback: "First-time buyers are priced out. Only apartments get built." },
-    right: { label: "Reform", forecast: "🏘️ Ownership", budget: 0, voters: 15, pennerPoints: 1, feedback: "Condo construction restarts. Middle class gets a path to ownership." },
-    pennerStance: 'right',
-    pennerContext: "We destroyed the starter home market with regulation. We must fix it.",
-    reality: "Fact: Condo starts down 90% since liability laws passed.",
-    communityStats: 78,
-    color: "bg-teal-700"
-  },
-  {
-    id: 'housing_2',
-    category: 'Housing',
-    title: "ADU Deregulation",
-    description: "Allow homeowners to build backyard cottages (ADUs) without excessive red tape?",
-    left: { label: "Restrict", forecast: "🚫 Shortage", budget: 0, voters: -5, pennerPoints: 0, feedback: "Housing remains scarce and expensive." },
-    right: { label: "Allow", forecast: "🏠 Supply", budget: 0, voters: 15, pennerPoints: 1, feedback: "New affordable units created instantly by private owners." },
-    pennerStance: 'right',
-    pennerContext: "The fastest way to affordable housing is getting government out of the way.",
-    reality: "Fact: HB 1337 (2023) legalized ADUs statewide.",
-    communityStats: 80,
-    color: "bg-sky-700"
-  },
-  {
-    id: 'housing_3',
-    category: 'Housing',
-    title: "Rent Control",
-    description: "Cap annual rent increases at 5%. Sounds good, but stifles supply.",
-    left: { label: "Cap Rents", forecast: "🛑 No Building", budget: -5, voters: 5, pennerPoints: 0, feedback: "Voters cheer today, but developers cancel projects tomorrow." },
-    right: { label: "Build More", forecast: "🏗️ Supply", budget: 0, voters: 0, pennerPoints: 1, feedback: "Supply is the only real fix for prices. We need more homes." },
-    pennerStance: 'right',
-    pennerContext: "Rent control fails everywhere it's tried. We need to build more homes.",
-    reality: "Fact: Rent stabilization bills introduced annually.",
-    communityStats: 50,
-    color: "bg-violet-700"
-  },
-
-  // --- TRANSPORTATION ---
-  {
-    id: 'trans_1',
-    category: 'Fixes',
-    title: "Green Ferry Mandate",
-    description: "The state wants to pause road paving to fund 2 new Electric Ferries. Commuters are stuck in traffic.",
-    left: { label: "Pave Roads", forecast: "🚗 Traffic Flow", budget: -5, voters: 15, pennerPoints: 1, feedback: "You prioritized the 99%. Freight and families can move again." },
-    right: { label: "Buy Ferries", forecast: "🚢 Green PR", budget: -15, voters: -10, pennerPoints: 0, feedback: "Ferries are ordered, but they won't arrive for 4 years. Potholes grow." },
-    pennerStance: 'left',
-    pennerContext: "Ferries are important, but we can't neglect the roads that carry 90% of our economy.",
-    reality: "Fact: Highway preservation budget is underfunded by $1B.",
-    communityStats: 85,
-    color: "bg-orange-600"
-  },
-  {
-    id: 'trans_2',
-    category: 'Fixes',
-    title: "Pothole Emergency",
-    description: "A harsh winter destroyed I-5. Divert 'Art in Public Places' funds to fix it?",
-    left: { label: "Keep Art", forecast: "🎨 Culture", budget: 0, voters: -20, pennerPoints: 0, feedback: "The murals look nice, but tires are popping left and right." },
-    right: { label: "Fix Roads", forecast: "🚧 Safety", budget: -5, voters: 25, pennerPoints: 1, feedback: "Common sense wins. Drivers are safe." },
-    pennerStance: 'right',
-    pennerContext: "Basic governance means fixing the roads first. Art is a luxury; safety is a necessity.",
-    reality: "Fact: Art funding is protected by statute.",
-    communityStats: 90,
-    color: "bg-slate-600"
-  },
-
-  // --- MISC / ENERGY / EDUCATION ---
+  
+  // --- THEME: MISC / RANDOM ---
   {
     id: 'misc_1',
     category: 'Energy',
@@ -395,19 +308,6 @@ const MASTER_DECK = [
     reality: "Fact: Charter schools capped; choice bills stalled.",
     communityStats: 60,
     color: "bg-cyan-700"
-  },
-  {
-    id: 'misc_3',
-    category: 'Education',
-    title: "Trade Schools",
-    description: "Shift funding from universities to vocational trade programs?",
-    left: { label: "Focus College", forecast: "🎓 Debt", budget: 0, voters: -5, pennerPoints: 0, feedback: "Students graduate with debt and no job skills." },
-    right: { label: "Fund Trades", forecast: "🛠️ Jobs", budget: -5, voters: 20, pennerPoints: 1, feedback: "Workforce grows. Real skills for real jobs." },
-    pennerStance: 'right',
-    pennerContext: "We need electricians and plumbers, not just degrees.",
-    reality: "Fact: Construction labor shortage is acute.",
-    communityStats: 95,
-    color: "bg-teal-600"
   }
 ];
 
@@ -419,19 +319,10 @@ const getRandomDeck = (count = 10, filterType = null, excludeIds = []) => {
     const typeDeck = deck.filter(card => card.category === filterType);
     if (typeDeck.length >= count) {
       deck = typeDeck;
-    } else {
-       // Fallback: mix in other cards if we run out of specific type
-       deck = [...typeDeck, ...deck.filter(c => c.category !== filterType)].slice(0, count);
     }
   }
   
-  // Fisher-Yates Shuffle
-  const shuffled = [...deck];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  
+  const shuffled = deck.sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 };
 
@@ -464,7 +355,7 @@ const Meter = ({ icon: Icon, value, color, label, lastChange }) => {
           }}
         />
       </div>
-      <span className={`text-sm mt-1 font-mono font-bold ${isDanger ? 'text-red-600' : 'text-slate-900'}`}>
+      <span className={`text-sm mt-1 font-mono font-bold ${isDanger ? 'text-red-600' : 'text-slate-500'}`}>
         {value > 0 ? '+' : ''}{value}%
       </span>
     </div>
@@ -472,7 +363,7 @@ const Meter = ({ icon: Icon, value, color, label, lastChange }) => {
 };
 
 const IntroScreen = ({ onStart }) => (
-  <div className="flex flex-col items-center justify-center min-h-full bg-gradient-to-br from-slate-50 to-blue-50 p-6 text-center animate-in fade-in duration-500 font-sans relative pb-24">
+  <div className="flex flex-col items-center justify-center min-h-full bg-gradient-to-br from-slate-50 to-blue-50 p-6 text-center animate-in fade-in duration-500 font-sans relative pb-20">
     <div className="bg-white p-6 rounded-full shadow-xl mb-8 border-4 border-slate-200 relative overflow-hidden group">
       <div className="absolute inset-0 bg-blue-50 opacity-0 group-hover:opacity-100 transition duration-500"></div>
       <Wrench size={64} className="text-blue-900 relative z-10" />
@@ -805,12 +696,23 @@ const GameOverScreen = ({ stats, outcome, pennerScore, onReset, user, totalCards
   const [email, setEmail] = useState('');
   const [zip, setZip] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [highScore, setHighScore] = useState(0);
   
   const alignment = Math.min(100, Math.round((pennerScore / totalCards) * 100));
 
   useEffect(() => {
-    signInAnonymously(auth).catch(console.error);
-  }, []);
+    const savedScore = localStorage.getItem('pennerSimHighScore') || 0;
+    if (alignment > savedScore) {
+      localStorage.setItem('pennerSimHighScore', alignment);
+      setHighScore(alignment);
+    } else {
+      setHighScore(savedScore);
+    }
+
+    if(auth && !auth.currentUser) {
+       signInAnonymously(auth).catch(err => console.log("Auth skipped in demo"));
+    }
+  }, [alignment]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -818,7 +720,7 @@ const GameOverScreen = ({ stats, outcome, pennerScore, onReset, user, totalCards
     
     // Save to Firebase
     try {
-        if (auth.currentUser) {
+        if (!isDemoMode && auth.currentUser) {
             const archetype = getArchetype();
             await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'leads'), {
               email,
@@ -951,8 +853,11 @@ export default function App() {
 
   useEffect(() => {
     const initAuth = async () => {
-      if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) { await signInWithCustomToken(auth, __initial_auth_token); } 
-      else { await signInAnonymously(auth); }
+      if (!isDemoMode && typeof __initial_auth_token !== 'undefined' && __initial_auth_token) { 
+          try { await signInWithCustomToken(auth, __initial_auth_token); } catch(e) { console.warn("Auth failed", e) }
+      } else if (!isDemoMode) { 
+          try { await signInAnonymously(auth); } catch(e) { console.warn("Auth failed", e) }
+      }
     };
     initAuth();
     const unsubscribe = onAuthStateChanged(auth, setUser);
@@ -960,9 +865,6 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    setDragOffset(0);
-    setDragStart(null);
-    setIsSwiping(false);
     setFeedbackState(null);
     setAdvisorOpen(false);
     setAdvisorText('');
@@ -1003,7 +905,6 @@ export default function App() {
 
   const handleAskAdvisor = async (e) => {
     e.stopPropagation();
-    if (isSwiping) return;
     setAdvisorOpen(true);
     if (advisorText) return; 
     setAdvisorLoading(true);
@@ -1058,14 +959,6 @@ export default function App() {
       setCardIndex(prev => prev + 1);
     }
   };
-
-  // Physics - Removed swipe handlers, keeping blank handlers to avoid errors if referenced
-  const onTouchStart = (e) => { };
-  const onMouseDown = (e) => { };
-  const onMove = (clientX) => { };
-  const onTouchMove = (e) => { };
-  const onMouseMove = (e) => { };
-  const onEnd = () => { };
 
   const getCardStyle = () => {
     return { transform: `translateX(0px) rotate(0deg)`, opacity: feedbackState ? 0 : 1, transition: 'none', cursor: 'default' };

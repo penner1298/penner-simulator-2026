@@ -43,47 +43,99 @@ const ARCHETYPES = {
     title: "The Bureaucrat",
     icon: AlertTriangle,
     color: "text-slate-500",
-    pitch: "You voted to keep the machinery running, even when it's broken. We need to stop funding the 'Stone Age' and start demanding results. Help me force that change.",
-    desc: "You tended to accept the 'Ghost Revenue' projections and allowed agencies to justify their own existence. While you kept the lights on, you funded a system that moves at the speed of bureaucracy, not business."
+    pitch:
+      "You voted to keep the machinery running, even when it's broken. We need to stop funding the 'Stone Age' and start demanding results. Help me force that change.",
+    desc: "You tended to accept the 'Ghost Revenue' projections and allowed agencies to justify their own existence. While you kept the lights on, you funded a system that moves at the speed of bureaucracy, not business.",
   },
   MANAGER: {
     title: "Establishment Manager",
     icon: Users,
     color: "text-blue-700",
-    pitch: "You see the cracks in the foundation, but you're hesitant to rebuild. I need allies who are willing to demand Zero-Based Budgeting and real accountability. Join me.",
-    desc: "You managed the decline. You avoided the worst mistakes, but you stopped short of the structural reforms needed to save Rainier School or truly cut red tape. We need to do more than just survive the session."
+    pitch:
+      "You see the cracks in the foundation, but you're hesitant to rebuild. I need allies who are willing to demand Zero-Based Budgeting and real accountability. Join me.",
+    desc: "You managed the decline. You avoided the worst mistakes, but you stopped short of the structural reforms needed to save Rainier School or truly cut red tape. We need to do more than just survive the session.",
   },
   PRAGMATIST: {
     title: "Pragmatic Builder",
     icon: Wrench,
     color: "text-blue-900",
-    pitch: "You have the right instincts: Cut the red tape, protect the vulnerable. I need your help to take the next step—forcing agencies to justify every dollar, every year.",
-    desc: "You voted to drag our state agencies out of the stone age. You recognize that systems should move at the speed of business. You are a strong ally for working families across Washington."
+    pitch:
+      "You have the right instincts: Cut the red tape, protect the vulnerable. I need your help to take the next step—forcing agencies to justify every dollar, every year.",
+    desc: "You voted to drag our state agencies out of the stone age. You recognize that systems should move at the speed of business. You are a strong ally for working families across Washington.",
   },
   CHAMPION: {
     title: "Firewall for Reform",
     icon: Shield,
     color: "text-orange-600",
-    pitch: "We are 100% aligned. You see exactly what I see: A budget built on phantom money and a system failing its most vulnerable. I need you in my inner circle.",
-    desc: "You are the firewall against wasteful spending. You voted to stop 'Ghost Revenue' and fought to save Rainier School. You understand that true compassion means delivering results, not just spending money. You are a Champion of Real Reform."
-  }
+    pitch:
+      "We are 100% aligned. You see exactly what I see: A budget built on phantom money and a system failing its most vulnerable. I need you in my inner circle.",
+    desc: "You are the firewall against wasteful spending. You voted to stop 'Ghost Revenue' and fought to save Rainier School. You understand that true compassion means delivering results, not just spending money. You are a Champion of Real Reform.",
+  },
 };
 
 // --- MASTER DATA DECK (EXPANDED) ---
 const MASTER_DECK = [
   // --- BUDGET & FISCAL ---
   {
-    id: 'fiscal_1',
-    category: 'Budget',
+    id: "fiscal_1",
+    category: "Budget",
     title: "The Rainy Day Fund",
-    description: "Revenue is down. The Governor wants to tap the Rainy Day Fund immediately rather than cut waste.",
-    left: { label: "Audit First", forecast: "📉 Sustainable", budget: 5, voters: -5, pennerPoints: 1, feedback: "You identified unspent accounts to cover the shortfall. It wasn't a windfall, but it stopped the raid." },
-    right: { label: "Raid Fund", forecast: "💸 Kick Can", budget: -15, voters: 5, pennerPoints: 0, feedback: "We survived today, but the state is exposed for the next recession." },
-    pennerStance: 'left',
-    pennerContext: "We can't treat reserves like a checking account. We must audit before we raid.",
+    description:
+      "Revenue is down. The Governor wants to tap the Rainy Day Fund immediately rather than cut waste.",
+    left: {
+      label: "Audit First",
+      forecast: "📉 Sustainable",
+      budget: 5,
+      voters: -5,
+      pennerPoints: 1,
+      feedback:
+        "You identified unspent accounts to cover the shortfall. It wasn't a windfall, but it stopped the raid.",
+    },
+    right: {
+      label: "Raid Fund",
+      forecast: "💸 Kick Can",
+      budget: -15,
+      voters: 5,
+      pennerPoints: 0,
+      feedback:
+        "We survived today, but the state is exposed for the next recession.",
+    },
+    pennerStance: "left",
+    pennerContext:
+      "We can't treat reserves like a checking account. We must audit before we raid.",
     reality: "Fact: Legislature depleted reserves in 2020 & 2025.",
     communityStats: 65,
-    color: "bg-slate-700"
+    color: "bg-slate-700",
+  },
+  {
+    id: "fiscal_2",
+    category: "Budget",
+    title: "Capital Gains Expansion",
+    description:
+      "A bill to lower the Capital Gains tax threshold to $25,000 to capture small business sales.",
+    left: {
+      label: "Block It",
+      forecast: "🛡️ Protect Biz",
+      budget: -5,
+      voters: 15,
+      pennerPoints: 1,
+      feedback: "Small business owners breathe a sigh of relief.",
+    },
+    right: {
+      label: "Pass It",
+      forecast: "💰 Revenue",
+      budget: 20,
+      voters: -25,
+      pennerPoints: 0,
+      feedback:
+        "Revenue spikes, but doctors and shop owners start leaving the state.",
+    },
+    pennerStance: "left",
+    pennerContext:
+      "An income tax by any other name is still an income tax. I voted NO.",
+    reality: "Fact: SB 5096 passed in 2021 (7% tax).",
+    communityStats: 72,
+    color: "bg-slate-800",
   },
   {
     id: 'fiscal_2',
@@ -128,20 +180,36 @@ const MASTER_DECK = [
     id: 'fiscal_7',
     category: 'Budget',
     title: "Close Tax Loophole",
-    description: "Out-of-state banks utilize a loophole to avoid B&O tax. Close it?",
-    left: { label: "Keep Loophole", forecast: "🛡️ Lobbyist Win", budget: -5, voters: -5, pennerPoints: 0, feedback: "Lobbyists are happy, but main street pays the difference." },
-    right: { label: "Close It", forecast: "⚖️ Fairness", budget: 20, voters: 15, pennerPoints: 1, feedback: "Fairness restored. Revenue collected without hurting local biz." },
-    pennerStance: 'right',
-    pennerContext: "Tax fairness matters. Out-of-state giants shouldn't pay less than local mom-and-pops.",
+    description:
+      "Out-of-state banks utilize a loophole to avoid B&O tax. Close it?",
+    left: {
+      label: "Keep Loophole",
+      forecast: "🛡️ Lobbyist Win",
+      budget: -5,
+      voters: -5,
+      pennerPoints: 0,
+      feedback: "Lobbyists are happy, but main street pays the difference.",
+    },
+    right: {
+      label: "Close It",
+      forecast: "⚖️ Fairness",
+      budget: 20,
+      voters: 15,
+      pennerPoints: 1,
+      feedback:
+        "Fairness restored. Revenue collected without hurting local biz.",
+    },
+    pennerStance: "right",
+    pennerContext:
+      "Tax fairness matters. Out-of-state giants shouldn't pay less than local mom-and-pops.",
     reality: "Fact: Various B&O preferences reviewed annually.",
     communityStats: 80,
-    color: "bg-indigo-700"
+    color: "bg-indigo-700",
   },
-
   // --- SMART GOVERNMENT ---
   {
-    id: 'smart_3',
-    category: 'Smart Gov',
+    id: "smart_3",
+    category: "Smart Gov",
     title: "The 85/15 Proposal",
     description: "Agencies want a fee hike for 'Admin Costs'. You propose capping admin overhead at 15%.",
     left: { label: "Grant Hike", forecast: "📈 Bureaucracy", budget: -10, voters: -20, pennerPoints: 0, feedback: "Bureaucracy grows. Service quality stays flat." },
@@ -153,8 +221,8 @@ const MASTER_DECK = [
     color: "bg-emerald-800"
   },
   {
-    id: 'smart_4',
-    category: 'Smart Gov',
+    id: "smart_4",
+    category: "Smart Gov",
     title: "Zombie Programs",
     description: "A $50M grant program has failed its metrics for 3 years. Renew or Kill?",
     left: { label: "Renew", forecast: "🔄 Status Quo", budget: -20, voters: -15, pennerPoints: 0, feedback: "Good money after bad. Trust in government erodes." },
@@ -166,29 +234,60 @@ const MASTER_DECK = [
     color: "bg-amber-800"
   },
   {
-    id: 'smart_8',
-    category: 'Smart Gov',
+    id: "smart_8",
+    category: "Smart Gov",
     title: "Paperless Permitting",
-    description: "Force counties to adopt digital permitting to speed up housing. Counties object to 'preemption'.",
-    left: { label: "Local Control", forecast: "🐢 Slow", budget: 0, voters: -10, pennerPoints: 0, feedback: "Housing remains delayed. Paper stacks grow." },
-    right: { label: "Mandate Digital", forecast: "⚡ Speed", budget: -5, voters: 20, pennerPoints: 1, feedback: "Permits move 40% faster. Builders get to work." },
-    pennerStance: 'right',
-    pennerContext: "Efficiency is compassion. We can't solve the housing crisis with fax machines.",
+    description:
+      "Force counties to adopt digital permitting to speed up housing. Counties object to 'preemption'.",
+    left: {
+      label: "Local Control",
+      forecast: "🐢 Slow",
+      budget: 0,
+      voters: -10,
+      pennerPoints: 0,
+      feedback: "Housing remains delayed. Paper stacks grow.",
+    },
+    right: {
+      label: "Mandate Digital",
+      forecast: "⚡ Speed",
+      budget: -5,
+      voters: 20,
+      pennerPoints: 1,
+      feedback: "Permits move 40% faster. Builders get to work.",
+    },
+    pennerStance: "right",
+    pennerContext:
+      "Efficiency is compassion. We can't solve the housing crisis with fax machines.",
     reality: "Fact: Permit delays add $50k to new home costs.",
     communityStats: 90,
-    color: "bg-cyan-700"
+    color: "bg-cyan-700",
   },
-
   // --- PROMISE OF CARE ---
   {
-    id: 'care_1',
-    category: 'Care',
+    id: "care_1",
+    category: "Care",
     title: "Promise of Care: DD",
-    description: "Budget writers want to close Rainier School to save money. Residents call it home.",
-    left: { label: "Close It", forecast: "💰 Save Money", budget: 15, voters: -35, pennerPoints: 0, feedback: "Residents are displaced. A moral failure." },
-    right: { label: "Protect Them", forecast: "❤️ Dignity", budget: -10, voters: 25, pennerPoints: 1, feedback: "You kept the promise to those who cannot care for themselves." },
-    pennerStance: 'right',
-    pennerContext: "We have a moral duty to our state's most disabled individuals.",
+    description:
+      "Budget writers want to close Rainier School (RHC) to save money. Residents call it home.",
+    left: {
+      label: "Close It",
+      forecast: "💰 Save Money",
+      budget: 15,
+      voters: -35,
+      pennerPoints: 0,
+      feedback: "Residents are displaced. A moral failure.",
+    },
+    right: {
+      label: "Protect Them",
+      forecast: "❤️ Dignity",
+      budget: -10,
+      voters: 25,
+      pennerPoints: 1,
+      feedback: "You kept the promise to those who cannot care for themselves.",
+    },
+    pennerStance: "right",
+    pennerContext:
+      "We have a moral duty to our state's most disabled individuals.",
     reality: "Fact: Attempts to close RHCs recur every budget cycle.",
     communityStats: 92,
     color: "bg-blue-800"
@@ -197,11 +296,27 @@ const MASTER_DECK = [
     id: 'care_2',
     category: 'Care',
     title: "Childcare Crisis",
-    description: "Providers are drowning in paperwork. Do we subsidize the cost or cut the red tape?",
-    left: { label: "Subsidize", forecast: "💸 High Cost", budget: -25, voters: 5, pennerPoints: 0, feedback: "Expensive, and didn't create a single new slot." },
-    right: { label: "Deregulate", forecast: "👶 Access", budget: 5, voters: 20, pennerPoints: 1, feedback: "Providers open new spots. Costs stabilize for families." },
-    pennerStance: 'right',
-    pennerContext: "The Promise of Care extends to working families. Fix the shortage by empowering providers.",
+    description:
+      "Providers are drowning in paperwork. Do we subsidize the cost or cut the red tape?",
+    left: {
+      label: "Subsidize",
+      forecast: "💸 High Cost",
+      budget: -25,
+      voters: 5,
+      pennerPoints: 0,
+      feedback: "Expensive, and didn't create a single new slot.",
+    },
+    right: {
+      label: "Deregulate",
+      forecast: "👶 Access",
+      budget: 5,
+      voters: 20,
+      pennerPoints: 1,
+      feedback: "Providers open new spots. Costs stabilize for families.",
+    },
+    pennerStance: "right",
+    pennerContext:
+      "The Promise of Care extends to working families. Fix the shortage by empowering providers.",
     reality: "Fact: Fair Start Act (2021) increased subsidies but costs rose.",
     communityStats: 60,
     color: "bg-indigo-900"
@@ -232,7 +347,6 @@ const MASTER_DECK = [
     communityStats: 88,
     color: "bg-pink-700"
   },
-
   // --- PUBLIC SAFETY ---
   {
     id: 'safety_1',
@@ -340,8 +454,37 @@ const MASTER_DECK = [
     communityStats: 50,
     color: "bg-violet-700"
   },
+  {
+    id: "safety_12",
+    category: "Safety",
+    title: "Retail Theft Taskforce",
+    description:
+      "Organized retail theft is closing stores. Fund a dedicated state prosecutor?",
+    left: {
+      label: "Local Issue",
+      forecast: "📉 Closures",
+      budget: 0,
+      voters: -15,
+      pennerPoints: 0,
+      feedback: "Local shops close. Neighborhoods lose access to goods.",
+    },
+    right: {
+      label: "Fund It",
+      forecast: "🛡️ Action",
+      budget: -5,
+      voters: 15,
+      pennerPoints: 1,
+      feedback: "Rings disrupted. Businesses feel safe to stay open.",
+    },
+    pennerStance: "right",
+    pennerContext:
+      "This isn't petty shoplifting; it's organized crime costing us billions.",
+    reality: "Fact: Retail theft costs WA $2.7B annually.",
+    communityStats: 82,
+    color: "bg-zinc-800",
+  },
 
-  // --- TRANSPORTATION ---
+  // --- MISC / ENERGY / EDUCATION ---
   {
     id: 'trans_1',
     category: 'Fixes',
@@ -420,8 +563,8 @@ const getRandomDeck = (count = 10, filterType = null, excludeIds = []) => {
     if (typeDeck.length >= count) {
       deck = typeDeck;
     } else {
-       // Fallback: mix in other cards if we run out of specific type
-       deck = [...typeDeck, ...deck.filter(c => c.category !== filterType)].slice(0, count);
+      // Fallback to mix
+      deck = [...typeDeck, ...deck.filter((c) => c.category !== filterType)];
     }
   }
   
@@ -451,14 +594,17 @@ const Meter = ({ icon: Icon, value, color, label, lastChange }) => {
         <Icon size={14} />
         <span>{label}</span>
       </div>
-      <div className={`w-full h-4 bg-slate-200 rounded-full overflow-hidden border-2 ${isDanger ? 'border-red-400' : 'border-slate-300'} shadow-inner relative`}>
-        {/* Center Line for 0 */}
+      <div
+        className={`w-full h-4 bg-slate-200 rounded-full overflow-hidden border-2 ${
+          isDanger ? "border-red-400" : "border-slate-300"
+        } shadow-inner relative`}
+      >
         <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-slate-400 opacity-50 z-10"></div>
-        
-        {/* Bar Logic: Handle Negative & Positive */}
-        <div 
-          className={`h-full transition-all duration-500 ease-out ${isDanger ? 'bg-red-500' : color}`} 
-          style={{ 
+        <div
+          className={`h-full transition-all duration-500 ease-out ${
+            isDanger ? "bg-red-500" : color
+          }`}
+          style={{
             width: `${Math.min(50, Math.abs(value) / 2)}%`,
             marginLeft: value < 0 ? `${50 - Math.min(50, Math.abs(value) / 2)}%` : '50%',
           }}
@@ -478,11 +624,17 @@ const IntroScreen = ({ onStart }) => (
       <Wrench size={64} className="text-blue-900 relative z-10" />
     </div>
     <div className="mb-4">
-      <span className="bg-blue-900 text-white text-xs font-bold px-4 py-1.5 uppercase tracking-widest rounded-full shadow-md">Washington 2026</span>
+      <span className="bg-blue-900 text-white text-xs font-bold px-4 py-1.5 uppercase tracking-widest rounded-full shadow-md">
+        Washington 2026
+      </span>
     </div>
-    <h1 className="text-5xl font-black text-slate-900 mb-2 tracking-tight leading-none">FIX<br/><span className="text-blue-900">WASHINGTON</span></h1>
+    <h1 className="text-5xl font-black text-slate-900 mb-2 tracking-tight leading-none">
+      FIX
+      <br />
+      <span className="text-blue-900">WASHINGTON</span>
+    </h1>
     <div className="w-24 h-2 bg-orange-600 mb-8 rounded-full"></div>
-    
+
     <p className="text-slate-600 mb-8 max-w-md leading-relaxed text-md font-medium">
       You have <strong>60 Days</strong> to balance the budget and restore public trust.
       <br/><br/>
@@ -496,9 +648,13 @@ const IntroScreen = ({ onStart }) => (
       <span>Start Session</span>
       <ChevronRight size={24} />
     </button>
-    
+
     <div className="absolute bottom-8 left-0 right-0 text-center">
-      <a href="https://votepenner.com/donate" target="_blank" className="text-xs text-slate-400 uppercase tracking-widest font-bold hover:text-blue-600 transition">
+      <a
+        href="https://votepenner.com/donate"
+        target="_blank"
+        className="text-xs text-slate-400 uppercase tracking-widest font-bold hover:text-blue-600 transition"
+      >
         Paid for by VotePenner
       </a>
     </div>
@@ -540,7 +696,6 @@ const BriefingScreen = ({ onNext }) => {
   );
 };
 
-// Special Session Alert Screen
 const SpecialSessionScreen = ({ onContinue }) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-full bg-red-900 text-white p-8 text-center animate-in zoom-in duration-500 font-sans relative">
@@ -564,68 +719,6 @@ const SpecialSessionScreen = ({ onContinue }) => {
     </div>
   );
 };
-
-const GoverningStyleMatrix = ({ budget, voters }) => {
-  // Determine Style
-  let title = "The Pragmatist";
-  let desc = "Balanced approach.";
-  let color = "text-purple-600";
-
-  if (budget > 40 && voters > 40) {
-    title = "The Statesman";
-    desc = "You achieved the impossible: Fiscal discipline AND public popularity.";
-    color = "text-green-600";
-  } else if (budget > 40 && voters <= 40) {
-    title = "The Austerity Hawk";
-    desc = "You saved the budget, but the public is hurting. A tough, necessary medicine.";
-    color = "text-blue-700";
-  } else if (budget <= 15 && voters > 40) {
-    title = "The Populist";
-    desc = "The people love you, but the state credit card is maxed out. Dangerous fun.";
-    color = "text-orange-600";
-  } else if (budget <= 15 && voters <= 40) {
-    title = "Gridlock Victim";
-    desc = "You tried to please everyone and pleased no one. The deficit grew and trust fell.";
-    color = "text-red-600";
-  }
-
-  return (
-    <div className="w-full max-w-sm bg-white p-6 rounded-2xl border border-slate-200 shadow-lg mb-6">
-      <div className="flex items-center gap-2 mb-4 border-b border-slate-100 pb-2">
-        <Activity size={20} className="text-slate-400" />
-        <span className="text-xs font-black text-slate-400 uppercase tracking-widest">State of the State</span>
-      </div>
-      
-      {/* 2x2 Matrix Viz */}
-      <div className="relative w-full h-32 bg-slate-50 rounded-lg border border-slate-200 mb-4 flex items-center justify-center overflow-hidden">
-         <div className="absolute w-full h-px bg-slate-300 top-1/2"></div>
-         <div className="absolute h-full w-px bg-slate-300 left-1/2"></div>
-         
-         <div className="absolute top-1 left-2 text-[8px] text-slate-400 uppercase font-bold">Hawk</div>
-         <div className="absolute bottom-1 left-2 text-[8px] text-slate-400 uppercase font-bold">Spend</div>
-         <div className="absolute bottom-1 right-2 text-[8px] text-slate-400 uppercase font-bold">Popular</div>
-         <div className="absolute bottom-1 left-1/2 -ml-4 text-[8px] text-slate-400 uppercase font-bold">Unpopular</div>
-
-         {/* Player Dot */}
-         <div 
-           className={`absolute w-4 h-4 rounded-full border-2 border-white shadow-md ${budget > 20 ? 'bg-blue-500' : 'bg-red-500'}`}
-           style={{
-             top: `${100 - Math.min(100, Math.max(0, budget))}%`, 
-             left: `${Math.min(100, Math.max(0, voters))}%`
-           }}
-         ></div>
-      </div>
-
-      <div className={`text-center font-black text-xl ${color} uppercase leading-tight`}>
-        {title}
-      </div>
-      <p className="text-center text-xs text-slate-500 mt-2 font-medium leading-relaxed">
-        {desc}
-      </p>
-    </div>
-  );
-};
-
 
 const SessionEndChoiceScreen = ({ onExtend, onFinish, stats }) => (
   <div className="flex flex-col items-center justify-center min-h-full bg-slate-900 text-white p-6 text-center animate-in zoom-in duration-300">
@@ -697,87 +790,114 @@ const ReviewSessionScreen = ({ votes, onFinish }) => {
 
   return (
     <div className="flex flex-col h-screen bg-slate-50 font-sans max-w-md mx-auto shadow-2xl border-x border-slate-200 overflow-hidden relative">
-       {/* Header */}
-       <div className="bg-slate-900 p-6 pb-8 text-white z-10 shadow-lg flex-none">
-         <h2 className="text-2xl font-black uppercase tracking-tight mb-4 flex items-center gap-2">
-            <Gavel className="text-orange-500" /> Special Session
-         </h2>
-         <p className="text-slate-300 text-xs mb-6">Review your votes. Fix the budget. Restore trust.</p>
-         
-         <div className="flex gap-4">
-            <Meter icon={DollarSign} label="State Budget" value={liveStats.budget} color="bg-green-500" lastChange={0} />
-            <Meter icon={Users} label="Voter Trust" value={liveStats.voters} color="bg-blue-500" lastChange={0} />
-         </div>
-       </div>
-       
-       {/* Scrollable List */}
-       <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-24 bg-slate-100">
-         {currentVotes.map((vote, idx) => {
-            const card = MASTER_DECK.find(c => c.id === vote.cardId);
-            if (!card) return null;
-            
-            const isLeft = vote.direction === 'left';
-            const isAligned = vote.direction === card.pennerStance;
+      {/* Header */}
+      <div className="bg-slate-900 p-6 pb-8 text-white z-10 shadow-lg flex-none">
+        <h2 className="text-2xl font-black uppercase tracking-tight mb-4 flex items-center gap-2">
+          <Gavel className="text-orange-500" /> Special Session
+        </h2>
+        <p className="text-slate-300 text-xs mb-6">
+          Review your votes. Fix the budget. Restore trust.
+        </p>
 
-            return (
-              <div key={vote.cardId} className="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-                <div className="flex justify-between items-start mb-3">
-                   <h3 className="font-bold text-slate-800 text-sm">{card.title}</h3>
-                   {isAligned ? (
-                     <span className="text-[10px] font-bold px-2 py-1 rounded uppercase bg-blue-100 text-blue-700">Agreed</span>
-                   ) : (
-                     <span className="text-[10px] font-bold px-2 py-1 rounded uppercase bg-orange-100 text-orange-700">Different</span>
-                   )}
-                </div>
-                
-                <div className="flex items-center gap-2 bg-slate-50 p-1 rounded-lg border border-slate-200">
-                   <button 
-                     onClick={() => toggleVote(idx)}
-                     className={`flex-1 py-3 text-xs font-bold rounded-md transition-all border ${isLeft ? 'bg-white text-slate-900 shadow-sm border-blue-500 ring-1 ring-blue-500' : 'text-slate-400 border-transparent hover:bg-slate-200'}`}
-                   >
-                     {card.left.label}
-                   </button>
-                   <RefreshCw size={16} className="text-slate-300" />
-                   <button 
-                     onClick={() => toggleVote(idx)}
-                     className={`flex-1 py-3 text-xs font-bold rounded-md transition-all border ${!isLeft ? 'bg-white text-slate-900 shadow-sm border-blue-500 ring-1 ring-blue-500' : 'text-slate-400 border-transparent hover:bg-slate-200'}`}
-                   >
-                     {card.right.label}
-                   </button>
-                </div>
-                
-                <div className="mt-2 flex gap-3 justify-center text-[10px] font-mono text-slate-400">
-                   <span>Bud: {isLeft ? card.left.budget : card.right.budget}</span>
-                   <span>Vote: {isLeft ? card.left.voters : card.right.voters}</span>
-                </div>
+        <div className="flex gap-4">
+          <Meter
+            icon={DollarSign}
+            label="State Budget"
+            value={liveStats.budget}
+            color="bg-green-500"
+            lastChange={0}
+          />
+          <Meter
+            icon={Users}
+            label="Voter Trust"
+            value={liveStats.voters}
+            color="bg-blue-500"
+            lastChange={0}
+          />
+        </div>
+      </div>
+
+      {/* Scrollable List */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-24 bg-slate-100">
+        {currentVotes.map((vote, idx) => {
+          const card = MASTER_DECK.find((c) => c.id === vote.cardId);
+          if (!card) return null;
+
+          const isLeft = vote.direction === "left";
+          const isAligned = vote.direction === card.pennerStance;
+
+          return (
+            <div
+              key={vote.cardId}
+              className="bg-white p-4 rounded-xl shadow-sm border border-slate-200"
+            >
+              <div className="flex justify-between items-start mb-3">
+                <h3 className="font-bold text-slate-800 text-sm">
+                  {card.title}
+                </h3>
+                {isAligned ? (
+                  <span className="text-[10px] font-bold px-2 py-1 rounded uppercase bg-blue-100 text-blue-700">
+                    Agreed
+                  </span>
+                ) : (
+                  <span className="text-[10px] font-bold px-2 py-1 rounded uppercase bg-orange-100 text-orange-700">
+                    Different
+                  </span>
+                )}
               </div>
-            );
-         })}
-       </div>
-       
-       {/* Footer Action */}
-       <div className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-200 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] flex-none">
-          <button 
-            onClick={() => onFinish(liveStats, liveStats.score)}
-            className="w-full bg-slate-900 hover:bg-slate-800 text-white font-black text-lg py-4 rounded-xl shadow-lg flex items-center justify-center gap-2"
-          >
-            <span>Adjourn Sine Die</span>
-            <ArrowRight size={20} />
-          </button>
-       </div>
+
+              <div className="flex items-center gap-2 bg-slate-50 p-1 rounded-lg border border-slate-200">
+                <button
+                  onClick={() => toggleVote(idx)}
+                  className={`flex-1 py-3 text-xs font-bold rounded-md transition-all border ${
+                    isLeft
+                      ? "bg-white text-slate-900 shadow-sm border-blue-500 ring-1 ring-blue-500"
+                      : "text-slate-400 border-transparent hover:bg-slate-200"
+                  }`}
+                >
+                  {card.left.label}
+                </button>
+                <RefreshCw size={16} className="text-slate-300" />
+                <button
+                  onClick={() => toggleVote(idx)}
+                  className={`flex-1 py-3 text-xs font-bold rounded-md transition-all border ${
+                    !isLeft
+                      ? "bg-white text-slate-900 shadow-sm border-blue-500 ring-1 ring-blue-500"
+                      : "text-slate-400 border-transparent hover:bg-slate-200"
+                  }`}
+                >
+                  {card.right.label}
+                </button>
+              </div>
+
+              <div className="mt-2 flex gap-3 justify-center text-[10px] font-mono text-slate-400">
+                <span>
+                  Bud: {isLeft ? card.left.budget : card.right.budget}
+                </span>
+                <span>
+                  Vote: {isLeft ? card.left.voters : card.right.voters}
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Footer Action */}
+      <div className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-200 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] flex-none">
+        <button
+          onClick={() => onFinish(liveStats, liveStats.score)}
+          className="w-full bg-slate-900 hover:bg-slate-800 text-white font-black text-lg py-4 rounded-xl shadow-lg flex items-center justify-center gap-2"
+        >
+          <span>Adjourn Sine Die</span>
+          <ArrowRight size={20} />
+        </button>
+      </div>
     </div>
   );
 };
 
-// Reform Gauge (Spectrum)
 const ReformSpectrum = ({ score }) => {
-  const getLabel = (s) => {
-    if (s < 30) return "Status Quo";
-    if (s < 60) return "Progressive";
-    if (s < 80) return "Pragmatic"; // Adjusted based on user feedback
-    return "Reform";
-  };
-
   return (
     <div className="w-full max-w-sm bg-white p-6 rounded-2xl border border-slate-200 shadow-lg mb-6">
       <div className="flex items-center gap-2 mb-4 border-b border-slate-100 pb-2">
@@ -805,7 +925,7 @@ const GameOverScreen = ({ stats, outcome, pennerScore, onReset, user, totalCards
   const [email, setEmail] = useState('');
   const [zip, setZip] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const alignment = Math.min(100, Math.round((pennerScore / totalCards) * 100));
 
   useEffect(() => {
@@ -815,22 +935,24 @@ const GameOverScreen = ({ stats, outcome, pennerScore, onReset, user, totalCards
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Save to Firebase
+
     try {
-        if (auth.currentUser) {
-            const archetype = getArchetype();
-            await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'leads'), {
-              email,
-              zip,
-              archetype: archetype.title,
-              score: alignment,
-              timestamp: serverTimestamp(),
-              userId: auth.currentUser.uid
-            });
-        }
+      if (auth.currentUser) {
+        const archetype = getArchetype();
+        await addDoc(
+          collection(db, "artifacts", appId, "public", "data", "leads"),
+          {
+            email,
+            zip,
+            archetype: archetype.title,
+            score: alignment,
+            timestamp: serverTimestamp(),
+            userId: auth.currentUser.uid,
+          }
+        );
+      }
     } catch (err) {
-        console.warn("Lead save skipped:", err.message);
+      console.warn("Lead save skipped:", err.message);
     }
     
     setTimeout(() => {
@@ -848,19 +970,7 @@ const GameOverScreen = ({ stats, outcome, pennerScore, onReset, user, totalCards
 
   const archetype = getArchetype();
 
-  const handleShare = async () => {
-    const text = `I scored ${alignment}% alignment with Rep. Penner's Reform Agenda! Can you fix Washington?`;
-    const url = window.location.href;
-    if (navigator.share) {
-      try { await navigator.share({ title: 'Fix Washington', text: text, url: url }); } catch (err) { console.log('Share canceled'); }
-    } else {
-      navigator.clipboard.writeText(`${text} ${url}`);
-      alert("Result copied to clipboard!");
-    }
-  };
-
-  // --- SCREEN: DATA CAPTURE ---
-  if (step === 'capture') {
+  if (step === "capture") {
     return (
       <div className="flex flex-col items-center justify-start pt-12 min-h-full bg-slate-50 text-slate-900 p-6 text-center animate-in zoom-in duration-300 overflow-y-auto font-sans relative pb-12">
         
@@ -884,9 +994,6 @@ const GameOverScreen = ({ stats, outcome, pennerScore, onReset, user, totalCards
                <div className="text-5xl font-black text-slate-800 mt-2">{alignment}%</div>
              </div>
           </div>
-          <button onClick={handleShare} className="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition transform active:scale-95 shadow-lg mt-4">
-            <Share2 size={20} /> <span>Challenge Friends</span>
-          </button>
         </div>
   
         <div className="w-full max-w-sm bg-white p-6 border-2 border-orange-500 rounded-2xl shadow-xl relative overflow-hidden mb-12">
@@ -951,8 +1058,11 @@ export default function App() {
 
   useEffect(() => {
     const initAuth = async () => {
-      if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) { await signInWithCustomToken(auth, __initial_auth_token); } 
-      else { await signInAnonymously(auth); }
+      if (typeof __initial_auth_token !== "undefined" && __initial_auth_token) {
+        await signInWithCustomToken(auth, __initial_auth_token);
+      } else {
+        await signInAnonymously(auth);
+      }
     };
     initAuth();
     const unsubscribe = onAuthStateChanged(auth, setUser);
@@ -1026,8 +1136,11 @@ export default function App() {
   };
 
   const commitSwipe = (direction) => {
-    setHistory(prev => [...prev, { stats: {...stats}, pennerScore, streak, cardIndex }]);
-    
+    setHistory((prev) => [
+      ...prev,
+      { stats: { ...stats }, pennerScore, streak, cardIndex },
+    ]);
+
     // Record Vote
     setVotes(prev => [...prev, { cardId: currentCard.id, direction: direction }]);
 
@@ -1059,26 +1172,43 @@ export default function App() {
     }
   };
 
-  // Physics - Removed swipe handlers, keeping blank handlers to avoid errors if referenced
-  const onTouchStart = (e) => { };
-  const onMouseDown = (e) => { };
-  const onMove = (clientX) => { };
-  const onTouchMove = (e) => { };
-  const onMouseMove = (e) => { };
-  const onEnd = () => { };
-
   const getCardStyle = () => {
-    return { transform: `translateX(0px) rotate(0deg)`, opacity: feedbackState ? 0 : 1, transition: 'none', cursor: 'default' };
+    return {
+      transform: `translateX(0px) rotate(0deg)`,
+      opacity: feedbackState ? 0 : 1,
+      transition: "none",
+      cursor: "default",
+    };
   };
 
-  if (gameState === 'intro') return <IntroScreen onStart={handleStart} />;
-  if (gameState === 'briefing') return <BriefingScreen onNext={handleEnterSession} />;
-  if (gameState === 'session_end_choice') return <SessionEndChoiceScreen onExtend={handleExtend} onFinish={handleFinishSession} stats={stats} />;
-  if (gameState === 'review_session') return <ReviewSessionScreen votes={votes} onFinish={handleReviewFinish} />;
-  if (gameState === 'gameover') return <GameOverScreen stats={stats} outcome={outcome} pennerScore={pennerScore} onReset={handleStart} onExtend={handleExtend} user={user} totalCards={activeDeck.length} />;
+  if (gameState === "intro") return <IntroScreen onStart={handleStart} />;
+  if (gameState === "briefing")
+    return <BriefingScreen onNext={handleEnterSession} />;
+  if (gameState === "session_end_choice")
+    return (
+      <SessionEndChoiceScreen
+        onExtend={handleExtend}
+        onFinish={handleFinishSession}
+        stats={stats}
+      />
+    );
+  if (gameState === "review_session")
+    return <ReviewSessionScreen votes={votes} onFinish={handleReviewFinish} />;
+  if (gameState === "gameover")
+    return (
+      <GameOverScreen
+        stats={stats}
+        outcome={outcome}
+        pennerScore={pennerScore}
+        onReset={handleStart}
+        onExtend={handleExtend}
+        user={user}
+        totalCards={activeDeck.length}
+      />
+    );
 
   return (
-    <div className="flex flex-col h-screen bg-slate-50 font-sans max-w-md mx-auto shadow-2xl border-x border-slate-200 overflow-y-auto relative">
+    <div className="flex flex-col h-[100dvh] bg-slate-50 font-sans max-w-md mx-auto shadow-2xl border-x border-slate-200 overflow-y-auto relative">
       {/* HUD */}
       <div className="bg-white pt-8 pb-2 px-4 border-b border-slate-200 z-10 flex-none sticky top-0 shadow-sm">
         <div className="flex justify-between items-start w-full mb-4 gap-4">
@@ -1135,15 +1265,39 @@ export default function App() {
         {/* BACKGROUND & ACTIVE CARDS */}
         <div className="absolute w-full max-w-sm h-[60vh] min-h-[450px] bg-white shadow-sm border border-slate-200 transform scale-95 translate-y-4 z-0 rounded-3xl" />
         {currentCard && (
-          <div key={currentCard.id} className="absolute w-full max-w-sm h-[60vh] min-h-[450px] bg-white shadow-2xl border border-slate-200 flex flex-col overflow-hidden z-20 rounded-3xl" style={getCardStyle()}>
-            <div className={`h-32 ${currentCard.color} flex items-center justify-center text-white p-4 relative`}>
-              {currentCard.category === 'Budget' && <DollarSign size={64} className="opacity-90 text-white/20"/>}
-              {currentCard.category === 'Care' && <Heart size={64} className="opacity-90 text-white/20"/>}
-              {currentCard.category === 'Safety' && <Shield size={64} className="opacity-90 text-white/20"/>}
-              {currentCard.category === 'Smart Gov' && <Brain size={64} className="opacity-90 text-white/20"/>}
-              {currentCard.category === 'Fixes' && <Wrench size={64} className="opacity-90 text-white/20"/>}
-              <div className="absolute top-4 left-4 bg-black/30 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider backdrop-blur-md border border-white/10">{currentCard.category}</div>
-              <button onClick={handleAskAdvisor} className="absolute top-4 right-4 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full backdrop-blur-md transition hover:scale-110 active:scale-95 border border-white/10" title="Intel Brief"><Sparkles size={20} /></button>
+          <div
+            key={currentCard.id}
+            className="absolute w-full max-w-sm h-[60vh] min-h-[450px] bg-white shadow-2xl border border-slate-200 flex flex-col overflow-hidden z-20 rounded-3xl"
+            style={getCardStyle()}
+          >
+            <div
+              className={`h-32 ${currentCard.color} flex items-center justify-center text-white p-4 relative`}
+            >
+              {currentCard.category === "Budget" && (
+                <DollarSign size={64} className="opacity-90 text-white/20" />
+              )}
+              {currentCard.category === "Care" && (
+                <Heart size={64} className="opacity-90 text-white/20" />
+              )}
+              {currentCard.category === "Safety" && (
+                <Shield size={64} className="opacity-90 text-white/20" />
+              )}
+              {currentCard.category === "Smart Gov" && (
+                <Brain size={64} className="opacity-90 text-white/20" />
+              )}
+              {currentCard.category === "Fixes" && (
+                <Wrench size={64} className="opacity-90 text-white/20" />
+              )}
+              <div className="absolute top-4 left-4 bg-black/30 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider backdrop-blur-md border border-white/10">
+                {currentCard.category}
+              </div>
+              <button
+                onClick={handleAskAdvisor}
+                className="absolute top-4 right-4 bg-black/30 hover:bg-black/50 text-white p-2 rounded-full backdrop-blur-md transition hover:scale-110 active:scale-95 border border-white/10"
+                title="Intel Brief"
+              >
+                <Sparkles size={20} />
+              </button>
             </div>
             {advisorOpen && (
               <div className="absolute inset-0 z-40 bg-slate-900/95 backdrop-blur-sm p-6 flex flex-col items-center justify-center text-center animate-in fade-in slide-in-from-bottom-4 duration-200">
@@ -1158,15 +1312,40 @@ export default function App() {
                 <p className="text-slate-600 text-md leading-relaxed font-medium">{currentCard.description}</p>
               </div>
               <div className="space-y-2 mt-4">
-                 <div className="flex justify-between px-1"><span className="text-[10px] uppercase font-bold text-slate-400">Action</span><span className="text-[10px] uppercase font-bold text-slate-400">Impact</span></div>
+                <div className="flex justify-between px-1">
+                  <span className="text-[10px] uppercase font-bold text-slate-400">
+                    Action
+                  </span>
+                  <span className="text-[10px] uppercase font-bold text-slate-400">
+                    Impact
+                  </span>
+                </div>
                 <div className="flex justify-between items-stretch gap-3">
-                  <button onClick={() => { commitSwipe('left'); }} className="w-1/2 bg-orange-50 rounded-xl p-3 border border-orange-200 flex flex-col justify-between text-left transition-colors hover:bg-orange-100 active:scale-95">
-                    <span className="text-orange-700 font-black text-xs leading-tight mb-1 uppercase">{currentCard.left.label}</span>
-                    <span className="text-[10px] text-orange-500 font-bold flex items-center gap-1 uppercase tracking-tight">{currentCard.left.forecast}</span>
+                  <button
+                    onClick={() => {
+                      commitSwipe("left");
+                    }}
+                    className="w-1/2 bg-orange-50 rounded-xl p-3 border border-orange-200 flex flex-col justify-between text-left transition-colors hover:bg-orange-100 active:scale-95"
+                  >
+                    <span className="text-orange-700 font-black text-xs leading-tight mb-1 uppercase">
+                      {currentCard.left.label}
+                    </span>
+                    <span className="text-[10px] text-orange-500 font-bold flex items-center gap-1 uppercase tracking-tight">
+                      {currentCard.left.forecast}
+                    </span>
                   </button>
-                  <button onClick={() => { commitSwipe('right'); }} className="w-1/2 bg-blue-50 rounded-xl p-3 border border-blue-200 flex flex-col justify-between text-right items-end transition-colors hover:bg-blue-100 active:scale-95">
-                    <span className="text-blue-700 font-black text-xs leading-tight mb-1 uppercase">{currentCard.right.label}</span>
-                    <span className="text-[10px] text-blue-500 font-bold flex items-center gap-1 uppercase tracking-tight">{currentCard.right.forecast}</span>
+                  <button
+                    onClick={() => {
+                      commitSwipe("right");
+                    }}
+                    className="w-1/2 bg-blue-50 rounded-xl p-3 border border-blue-200 flex flex-col justify-between text-right items-end transition-colors hover:bg-blue-100 active:scale-95"
+                  >
+                    <span className="text-blue-700 font-black text-xs leading-tight mb-1 uppercase">
+                      {currentCard.right.label}
+                    </span>
+                    <span className="text-[10px] text-blue-500 font-bold flex items-center gap-1 uppercase tracking-tight">
+                      {currentCard.right.forecast}
+                    </span>
                   </button>
                 </div>
               </div>

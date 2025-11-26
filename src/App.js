@@ -111,42 +111,103 @@ const callGemini = async (prompt) => {
 // --- ARCHETYPES ---
 const ARCHETYPES = {
   STATUS_QUO: {
-    title: "Status Quo Enabler",
+    title: "The Bureaucrat",
     icon: AlertTriangle,
     color: "text-slate-500",
     pitch:
-      "We might not agree on every vote, but we both know Olympia is gridlocked. I'm running to bring common sense and efficiency back to government—goals we all share.",
-    desc: "You tend to vote with the majority, prioritizing short-term peace over long-term stability. While you kept the government running, you likely deepened the structural deficit.",
+      "You voted to keep the machinery running, even when it's broken. We need to stop funding the 'Stone Age' and start demanding results. Help me force that change.",
+    desc: "You tended to accept the 'Ghost Revenue' projections and allowed agencies to justify their own existence. While you kept the lights on, you funded a system that moves at the speed of bureaucracy, not business.",
   },
   MANAGER: {
     title: "Establishment Manager",
     icon: Users,
-    color: "text-blue-600",
+    color: "text-blue-700",
     pitch:
-      "You see the problems, but you're cautious about the solutions. I need your help to build a coalition that is brave enough to actually fix the budget, not just manage the decline.",
-    desc: "You are a cautious operator. You stopped the worst excesses but hesitated to push for structural reform. You understand the problems, but you're playing by the old rules.",
+      "You see the cracks in the foundation, but you're hesitant to rebuild. I need allies who are willing to demand Zero-Based Budgeting and real accountability. Join me.",
+    desc: "You managed the decline. You avoided the worst mistakes, but you stopped short of the structural reforms needed to save Rainier School or truly cut red tape. We need to do more than just survive the session.",
   },
   PRAGMATIST: {
-    title: "Pragmatic Change Agent",
-    icon: Brain,
-    color: "text-purple-600",
+    title: "Pragmatic Builder",
+    icon: Wrench,
+    color: "text-blue-900",
     pitch:
-      "You have excellent instincts. You know we need to pivot. Your donation helps me reach more voters who think like you—rational, practical, and ready for change.",
-    desc: "You recognize that the budget is broken and that public safety is non-negotiable. You made the right calls on the big issues, but occasionally compromised on the details.",
+      "You have the right instincts: Cut the red tape, protect the vulnerable. I need your help to take the next step—forcing agencies to justify every dollar, every year.",
+    desc: "You voted to drag our state agencies out of the stone age. You recognize that systems should move at the speed of business. You are a strong ally for working families across Washington.",
   },
   CHAMPION: {
-    title: "Champion of Real Reform",
-    icon: Trophy,
+    title: "Firewall for Reform",
+    icon: Shield,
     color: "text-orange-600",
     pitch:
-      "You get it. You are exactly the kind of ally I need in this fight. We are outnumbered in Olympia, so I need your help to amplify our message.",
-    desc: "You see through the noise. You understand that 'Compassion' requires accountability and that a 'Balanced Budget' shouldn't rely on gimmicks. You are a true ally.",
+      "We are 100% aligned. You see exactly what I see: A budget built on phantom money and a system failing its most vulnerable. I need you in my inner circle.",
+    desc: "You are the firewall against wasteful spending. You voted to stop 'Ghost Revenue' and fought to save Rainier School. You understand that true compassion means delivering results, not just spending money. You are a Champion of Real Reform.",
   },
 };
 
 // --- MASTER DATA DECK ---
 const MASTER_DECK = [
-  // --- BUDGET SAVERS ---
+  // --- BUDGET & FISCAL ---
+  {
+    id: "fiscal_1",
+    category: "Budget",
+    title: "The Rainy Day Fund",
+    description:
+      "Revenue is down. The Governor wants to tap the Rainy Day Fund immediately rather than cut waste.",
+    left: {
+      label: "Audit First",
+      forecast: "📉 Sustainable",
+      budget: 5,
+      voters: -5,
+      pennerPoints: 1,
+      feedback:
+        "You identified unspent accounts to cover the shortfall. It wasn't a windfall, but it stopped the raid.",
+    },
+    right: {
+      label: "Raid Fund",
+      forecast: "💸 Kick Can",
+      budget: -15,
+      voters: 5,
+      pennerPoints: 0,
+      feedback:
+        "We survived today, but the state is exposed for the next recession.",
+    },
+    pennerStance: "left",
+    pennerContext:
+      "We can't treat reserves like a checking account. We must audit before we raid.",
+    reality: "Fact: Legislature depleted reserves in 2020 & 2025.",
+    communityStats: 65,
+    color: "bg-slate-700",
+  },
+  {
+    id: "fiscal_2",
+    category: "Budget",
+    title: "Capital Gains Expansion",
+    description:
+      "A bill to lower the Capital Gains tax threshold to $25,000 to capture small business sales.",
+    left: {
+      label: "Block It",
+      forecast: "🛡️ Protect Biz",
+      budget: -5,
+      voters: 15,
+      pennerPoints: 1,
+      feedback: "Small business owners breathe a sigh of relief.",
+    },
+    right: {
+      label: "Pass It",
+      forecast: "💰 Revenue",
+      budget: 20,
+      voters: -25,
+      pennerPoints: 0,
+      feedback:
+        "Revenue spikes, but doctors and shop owners start leaving the state.",
+    },
+    pennerStance: "left",
+    pennerContext:
+      "An income tax by any other name is still an income tax. I voted NO.",
+    reality: "Fact: SB 5096 passed in 2021 (7% tax).",
+    communityStats: 72,
+    color: "bg-slate-800",
+  },
   {
     id: "fiscal_5",
     category: "Budget",
@@ -222,7 +283,7 @@ const MASTER_DECK = [
     right: {
       label: "Close It",
       forecast: "⚖️ Fairness",
-      budget: 25,
+      budget: 20,
       voters: 15,
       pennerPoints: 1,
       feedback:
@@ -235,70 +296,9 @@ const MASTER_DECK = [
     communityStats: 80,
     color: "bg-indigo-700",
   },
-  // --- ORIGINAL DECK ---
+  // --- SMART GOVERNMENT ---
   {
-    id: "fiscal_1",
-    category: "Budget",
-    title: "The Rainy Day Fund",
-    description:
-      "Revenue is down. The Governor wants to tap the Rainy Day Fund immediately rather than cut waste.",
-    left: {
-      label: "Audit First",
-      forecast: "📉 Sustainable",
-      budget: 5,
-      voters: -5,
-      pennerPoints: 1,
-      feedback:
-        "You identified unspent accounts to cover the shortfall. It wasn't a windfall, but it stopped the raid.",
-    },
-    right: {
-      label: "Raid Fund",
-      forecast: "💸 Kick Can",
-      budget: -15,
-      voters: 5,
-      pennerPoints: 0,
-      feedback:
-        "We survived today, but the state is exposed for the next recession.",
-    },
-    pennerStance: "left",
-    pennerContext:
-      "We can't treat reserves like a checking account. We must audit before we raid.",
-    reality: "Fact: Legislature depleted reserves in 2020 & 2025.",
-    communityStats: 65,
-    color: "bg-slate-700",
-  },
-  {
-    id: "fiscal_2",
-    category: "Budget",
-    title: "Capital Gains Expansion",
-    description:
-      "A bill to lower the Capital Gains tax threshold to $25,000 to capture small business sales.",
-    left: {
-      label: "Block It",
-      forecast: "🛡️ Protect Biz",
-      budget: -5,
-      voters: 15,
-      pennerPoints: 1,
-      feedback: "Small business owners breathe a sigh of relief.",
-    },
-    right: {
-      label: "Pass It",
-      forecast: "💰 Revenue",
-      budget: 20,
-      voters: -25,
-      pennerPoints: 0,
-      feedback:
-        "Revenue spikes, but doctors and shop owners start leaving the state.",
-    },
-    pennerStance: "left",
-    pennerContext:
-      "An income tax by any other name is still an income tax. I voted NO.",
-    reality: "Fact: SB 5096 passed in 2021 (7% tax).",
-    communityStats: 72,
-    color: "bg-slate-800",
-  },
-  {
-    id: "fiscal_3",
+    id: "smart_3",
     category: "Smart Gov",
     title: "The 85/15 Proposal",
     description:
@@ -328,7 +328,7 @@ const MASTER_DECK = [
     color: "bg-emerald-800",
   },
   {
-    id: "fiscal_4",
+    id: "smart_4",
     category: "Smart Gov",
     title: "Zombie Programs",
     description:
@@ -357,11 +357,41 @@ const MASTER_DECK = [
     color: "bg-amber-800",
   },
   {
+    id: "smart_8",
+    category: "Smart Gov",
+    title: "Paperless Permitting",
+    description:
+      "Force counties to adopt digital permitting to speed up housing. Counties object to 'preemption'.",
+    left: {
+      label: "Local Control",
+      forecast: "🐢 Slow",
+      budget: 0,
+      voters: -10,
+      pennerPoints: 0,
+      feedback: "Housing remains delayed. Paper stacks grow.",
+    },
+    right: {
+      label: "Mandate Digital",
+      forecast: "⚡ Speed",
+      budget: -5,
+      voters: 20,
+      pennerPoints: 1,
+      feedback: "Permits move 40% faster. Builders get to work.",
+    },
+    pennerStance: "right",
+    pennerContext:
+      "Efficiency is compassion. We can't solve the housing crisis with fax machines.",
+    reality: "Fact: Permit delays add $50k to new home costs.",
+    communityStats: 90,
+    color: "bg-cyan-700",
+  },
+  // --- PROMISE OF CARE ---
+  {
     id: "care_1",
     category: "Care",
     title: "Promise of Care: DD",
     description:
-      "Budget writers want to close Rainier School to save money. Residents call it home.",
+      "Budget writers want to close Rainier School (RHC) to save money. Residents call it home.",
     left: {
       label: "Close It",
       forecast: "💰 Save Money",
@@ -400,7 +430,7 @@ const MASTER_DECK = [
       feedback: "Expensive, and didn't create a single new slot.",
     },
     right: {
-      label: "Dereigulate",
+      label: "Deregulate",
       forecast: "👶 Access",
       budget: 5,
       voters: 20,
@@ -443,6 +473,7 @@ const MASTER_DECK = [
     communityStats: 80,
     color: "bg-purple-900",
   },
+  // --- PUBLIC SAFETY ---
   {
     id: "safety_1",
     category: "Safety",
@@ -530,8 +561,37 @@ const MASTER_DECK = [
     communityStats: 90,
     color: "bg-green-800",
   },
+  {
+    id: "safety_12",
+    category: "Safety",
+    title: "Retail Theft Taskforce",
+    description:
+      "Organized retail theft is closing stores. Fund a dedicated state prosecutor?",
+    left: {
+      label: "Local Issue",
+      forecast: "📉 Closures",
+      budget: 0,
+      voters: -15,
+      pennerPoints: 0,
+      feedback: "Local shops close. Neighborhoods lose access to goods.",
+    },
+    right: {
+      label: "Fund It",
+      forecast: "🛡️ Action",
+      budget: -5,
+      voters: 15,
+      pennerPoints: 1,
+      feedback: "Rings disrupted. Businesses feel safe to stay open.",
+    },
+    pennerStance: "right",
+    pennerContext:
+      "This isn't petty shoplifting; it's organized crime costing us billions.",
+    reality: "Fact: Retail theft costs WA $2.7B annually.",
+    communityStats: 82,
+    color: "bg-zinc-800",
+  },
 
-  // --- THEME: MISC / RANDOM ---
+  // --- MISC / ENERGY / EDUCATION ---
   {
     id: "misc_1",
     category: "Energy",
@@ -599,6 +659,9 @@ const getRandomDeck = (count = 10, filterType = null, excludeIds = []) => {
     const typeDeck = deck.filter((card) => card.category === filterType);
     if (typeDeck.length >= count) {
       deck = typeDeck;
+    } else {
+      // Fallback to mix
+      deck = [...typeDeck, ...deck.filter((c) => c.category !== filterType)];
     }
   }
 
@@ -636,10 +699,7 @@ const Meter = ({ icon: Icon, value, color, label, lastChange }) => {
           isDanger ? "border-red-400" : "border-slate-300"
         } shadow-inner relative`}
       >
-        {/* Center Line for 0 */}
         <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-slate-400 opacity-50 z-10"></div>
-
-        {/* Bar Logic: Handle Negative & Positive */}
         <div
           className={`h-full transition-all duration-500 ease-out ${
             isDanger ? "bg-red-500" : color
@@ -664,22 +724,22 @@ const Meter = ({ icon: Icon, value, color, label, lastChange }) => {
 };
 
 const IntroScreen = ({ onStart }) => (
-  <div className="flex flex-col items-center justify-center min-h-full bg-gradient-to-br from-slate-50 to-blue-50 p-6 text-center animate-in fade-in duration-500 font-sans relative pb-20">
-    <div className="bg-white p-6 rounded-full shadow-xl mb-8 border-2 border-slate-100 relative overflow-hidden group">
+  <div className="flex flex-col items-center justify-center min-h-full bg-gradient-to-br from-slate-50 to-blue-50 p-6 text-center animate-in fade-in duration-500 font-sans relative pb-24">
+    <div className="bg-white p-6 rounded-full shadow-xl mb-8 border-4 border-slate-200 relative overflow-hidden group">
       <div className="absolute inset-0 bg-blue-50 opacity-0 group-hover:opacity-100 transition duration-500"></div>
-      <Wrench size={64} className="text-blue-600 relative z-10" />
+      <Wrench size={64} className="text-blue-900 relative z-10" />
     </div>
     <div className="mb-4">
-      <span className="bg-blue-600 text-white text-xs font-bold px-3 py-1 uppercase tracking-widest rounded-full shadow-md">
+      <span className="bg-blue-900 text-white text-xs font-bold px-4 py-1.5 uppercase tracking-widest rounded-full shadow-md">
         Washington 2026
       </span>
     </div>
     <h1 className="text-5xl font-black text-slate-900 mb-2 tracking-tight leading-none">
       FIX
       <br />
-      <span className="text-blue-600">WASHINGTON</span>
+      <span className="text-blue-900">WASHINGTON</span>
     </h1>
-    <div className="w-20 h-2 bg-orange-500 mb-8 rounded-full"></div>
+    <div className="w-24 h-2 bg-orange-600 mb-8 rounded-full"></div>
 
     <p className="text-slate-600 mb-8 max-w-md leading-relaxed text-md font-medium">
       You have <strong>60 Days</strong> to balance the budget and restore public
@@ -691,17 +751,17 @@ const IntroScreen = ({ onStart }) => (
 
     <button
       onClick={onStart}
-      className="w-full max-w-xs bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-black text-lg py-5 px-8 rounded-xl shadow-xl transform transition active:scale-95 flex items-center justify-center space-x-3 border-b-4 border-blue-800"
+      className="w-full max-w-xs bg-blue-900 hover:bg-blue-800 text-white font-black text-lg py-5 px-8 rounded-xl shadow-xl transform transition active:scale-95 flex items-center justify-center space-x-3 border-b-4 border-slate-900"
     >
       <span>Start Session</span>
       <ChevronRight size={24} />
     </button>
 
-    <div className="absolute bottom-6 left-0 right-0 text-center">
+    <div className="absolute bottom-8 left-0 right-0 text-center">
       <a
         href="https://votepenner.com/donate"
         target="_blank"
-        className="text-[10px] text-slate-400 uppercase tracking-widest font-bold hover:text-blue-600 transition"
+        className="text-xs text-slate-400 uppercase tracking-widest font-bold hover:text-blue-600 transition"
       >
         Paid for by VotePenner
       </a>
@@ -757,7 +817,6 @@ const BriefingScreen = ({ onNext }) => {
   );
 };
 
-// Special Session Alert Screen
 const SpecialSessionScreen = ({ onContinue }) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-full bg-red-900 text-white p-8 text-center animate-in zoom-in duration-500 font-sans relative">
@@ -784,85 +843,6 @@ const SpecialSessionScreen = ({ onContinue }) => {
         <span>Convene Session</span>
         <ArrowRight size={24} />
       </button>
-    </div>
-  );
-};
-
-const GoverningStyleMatrix = ({ budget, voters }) => {
-  // Determine Style
-  let title = "The Pragmatist";
-  let desc = "Balanced approach.";
-  let color = "text-purple-600";
-
-  if (budget > 40 && voters > 40) {
-    title = "The Statesman";
-    desc =
-      "You achieved the impossible: Fiscal discipline AND public popularity.";
-    color = "text-green-600";
-  } else if (budget > 40 && voters <= 40) {
-    title = "The Austerity Hawk";
-    desc =
-      "You saved the budget, but the public is hurting. A tough, necessary medicine.";
-    color = "text-blue-700";
-  } else if (budget <= 15 && voters > 40) {
-    title = "The Populist";
-    desc =
-      "The people love you, but the state credit card is maxed out. Dangerous fun.";
-    color = "text-orange-600";
-  } else if (budget <= 15 && voters <= 40) {
-    title = "Gridlock Victim";
-    desc =
-      "You tried to please everyone and pleased no one. The deficit grew and trust fell.";
-    color = "text-red-600";
-  }
-
-  return (
-    <div className="w-full max-w-sm bg-white p-6 rounded-2xl border border-slate-200 shadow-lg mb-6">
-      <div className="flex items-center gap-2 mb-4 border-b border-slate-100 pb-2">
-        <Activity size={20} className="text-slate-400" />
-        <span className="text-xs font-black text-slate-400 uppercase tracking-widest">
-          State of the State
-        </span>
-      </div>
-
-      {/* 2x2 Matrix Viz */}
-      <div className="relative w-full h-32 bg-slate-50 rounded-lg border border-slate-200 mb-4 flex items-center justify-center overflow-hidden">
-        <div className="absolute w-full h-px bg-slate-300 top-1/2"></div>
-        <div className="absolute h-full w-px bg-slate-300 left-1/2"></div>
-
-        <div className="absolute top-1 left-2 text-[8px] text-slate-400 uppercase font-bold">
-          Hawk
-        </div>
-        <div className="absolute bottom-1 left-2 text-[8px] text-slate-400 uppercase font-bold">
-          Spend
-        </div>
-        <div className="absolute bottom-1 right-2 text-[8px] text-slate-400 uppercase font-bold">
-          Popular
-        </div>
-        <div className="absolute bottom-1 left-1/2 -ml-4 text-[8px] text-slate-400 uppercase font-bold">
-          Unpopular
-        </div>
-
-        {/* Player Dot */}
-        <div
-          className={`absolute w-4 h-4 rounded-full border-2 border-white shadow-md ${
-            budget > 20 ? "bg-blue-500" : "bg-red-500"
-          }`}
-          style={{
-            top: `${100 - Math.min(100, Math.max(0, budget))}%`,
-            left: `${Math.min(100, Math.max(0, voters))}%`,
-          }}
-        ></div>
-      </div>
-
-      <div
-        className={`text-center font-black text-xl ${color} uppercase leading-tight`}
-      >
-        {title}
-      </div>
-      <p className="text-center text-xs text-slate-500 mt-2 font-medium leading-relaxed">
-        {desc}
-      </p>
     </div>
   );
 };
@@ -968,7 +948,7 @@ const ReviewSessionScreen = ({ votes, onFinish }) => {
   return (
     <div className="flex flex-col h-screen bg-slate-50 font-sans max-w-md mx-auto shadow-2xl border-x border-slate-200 overflow-hidden relative">
       {/* Header */}
-      <div className="bg-slate-900 p-6 pb-8 text-white z-10 shadow-lg">
+      <div className="bg-slate-900 p-6 pb-8 text-white z-10 shadow-lg flex-none">
         <h2 className="text-2xl font-black uppercase tracking-tight mb-4 flex items-center gap-2">
           <Gavel className="text-orange-500" /> Special Session
         </h2>
@@ -1061,7 +1041,7 @@ const ReviewSessionScreen = ({ votes, onFinish }) => {
       </div>
 
       {/* Footer Action */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-200 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">
+      <div className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-slate-200 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] flex-none">
         <button
           onClick={() => onFinish(liveStats, liveStats.score)}
           className="w-full bg-slate-900 hover:bg-slate-800 text-white font-black text-lg py-4 rounded-xl shadow-lg flex items-center justify-center gap-2"
@@ -1074,15 +1054,7 @@ const ReviewSessionScreen = ({ votes, onFinish }) => {
   );
 };
 
-// Reform Gauge (Spectrum)
 const ReformSpectrum = ({ score }) => {
-  const getLabel = (s) => {
-    if (s < 30) return "Status Quo";
-    if (s < 60) return "Progressive";
-    if (s < 85) return "Pragmatic";
-    return "Reform";
-  };
-
   return (
     <div className="w-full max-w-sm bg-white p-6 rounded-2xl border border-slate-200 shadow-lg mb-6">
       <div className="flex items-center gap-2 mb-4 border-b border-slate-100 pb-2">
@@ -1119,37 +1091,19 @@ const GameOverScreen = ({
   const [email, setEmail] = useState("");
   const [zip, setZip] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [highScore, setHighScore] = useState(0);
 
   const alignment = Math.min(100, Math.round((pennerScore / totalCards) * 100));
 
   useEffect(() => {
-    // We check if auth is defined and if currentUser is null before signing in anonymously
-    if (auth && !auth.currentUser) {
-      signInAnonymously(auth).catch(console.error);
-    }
-
-    // High score logic (localStorage)
-    try {
-      const savedScore = localStorage.getItem("pennerSimHighScore") || 0;
-      if (alignment > savedScore) {
-        localStorage.setItem("pennerSimHighScore", alignment);
-        setHighScore(alignment);
-      } else {
-        setHighScore(savedScore);
-      }
-    } catch (e) {
-      console.warn("Local storage access denied");
-    }
-  }, [alignment]);
+    signInAnonymously(auth).catch(console.error);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Save to Firebase
-    if (!isDemoMode && auth.currentUser) {
-      try {
+    try {
+      if (auth.currentUser) {
         const archetype = getArchetype();
         await addDoc(
           collection(db, "artifacts", appId, "public", "data", "leads"),
@@ -1162,11 +1116,9 @@ const GameOverScreen = ({
             userId: auth.currentUser.uid,
           }
         );
-      } catch (err) {
-        console.warn("Lead save skipped:", err.message);
       }
-    } else {
-      console.log("Demo mode or no user: Lead not saved to DB");
+    } catch (err) {
+      console.warn("Lead save skipped:", err.message);
     }
 
     setTimeout(() => {
@@ -1184,26 +1136,6 @@ const GameOverScreen = ({
 
   const archetype = getArchetype();
 
-  const handleShare = async () => {
-    const text = `I scored ${alignment}% alignment with Rep. Penner's Reform Agenda! Can you fix Washington?`;
-    const url = window.location.href;
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: "Fix Washington",
-          text: text,
-          url: url,
-        });
-      } catch (err) {
-        console.log("Share canceled");
-      }
-    } else {
-      navigator.clipboard.writeText(`${text} ${url}`);
-      alert("Result copied to clipboard!");
-    }
-  };
-
-  // --- SCREEN: DATA CAPTURE ---
   if (step === "capture") {
     return (
       <div className="flex flex-col items-center justify-start pt-12 min-h-full bg-slate-50 text-slate-900 p-6 text-center animate-in zoom-in duration-300 overflow-y-auto font-sans relative pb-12">
@@ -1240,12 +1172,6 @@ const GameOverScreen = ({
               </div>
             </div>
           </div>
-          <button
-            onClick={handleShare}
-            className="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition transform active:scale-95 shadow-lg mt-4"
-          >
-            <Share2 size={20} /> <span>Challenge Friends</span>
-          </button>
         </div>
 
         <div className="w-full max-w-sm bg-white p-6 border-2 border-orange-500 rounded-2xl shadow-xl relative overflow-hidden mb-12">
@@ -1369,39 +1295,16 @@ export default function App() {
   const [playedCardIds, setPlayedCardIds] = useState([]);
 
   useEffect(() => {
-    // Use a flag to track if component is mounted to prevent auth state updates after unmount
-    let isMounted = true;
-
     const initAuth = async () => {
-      if (!isDemoMode) {
-        try {
-          if (
-            typeof __initial_auth_token !== "undefined" &&
-            __initial_auth_token
-          ) {
-            await signInWithCustomToken(auth, __initial_auth_token);
-          } else {
-            await signInAnonymously(auth);
-          }
-        } catch (e) {
-          console.warn(
-            "Auth failed in init, likely demo mode or network issue."
-          );
-        }
+      if (typeof __initial_auth_token !== "undefined" && __initial_auth_token) {
+        await signInWithCustomToken(auth, __initial_auth_token);
+      } else {
+        await signInAnonymously(auth);
       }
     };
     initAuth();
-
-    let unsubscribe = () => {};
-    if (!isDemoMode) {
-      unsubscribe = onAuthStateChanged(auth, (u) => {
-        if (isMounted) setUser(u);
-      });
-    }
-    return () => {
-      isMounted = false;
-      unsubscribe();
-    };
+    const unsubscribe = onAuthStateChanged(auth, setUser);
+    return () => unsubscribe();
   }, []);
 
   useEffect(() => {
@@ -1487,8 +1390,6 @@ export default function App() {
   };
 
   const commitSwipe = (direction) => {
-    if (isSwiping) return;
-    setIsSwiping(true);
     setHistory((prev) => [
       ...prev,
       { stats: { ...stats }, pennerScore, streak, cardIndex },
@@ -1538,41 +1439,14 @@ export default function App() {
     }
   };
 
-  // Physics
-  const onTouchStart = (e) => {
-    if (!isSwiping) setDragStart(e.touches[0].clientX);
-  };
-  const onMouseDown = (e) => {
-    if (!isSwiping) setDragStart(e.clientX);
-  };
-  const onMove = (clientX) => {
-    if (dragStart === null || isSwiping) return;
-    setDragOffset(clientX - dragStart);
-  };
-  const onTouchMove = (e) => onMove(e.touches[0].clientX);
-  const onMouseMove = (e) => onMove(e.clientX);
-  const onEnd = () => {
-    if (dragStart === null || isSwiping) return;
-    const threshold = 100;
-    if (dragOffset > threshold) commitSwipe("right");
-    else if (dragOffset < -threshold) commitSwipe("left");
-    else setDragOffset(0);
-    setDragStart(null);
-  };
-
   const getCardStyle = () => {
-    const rotate = dragOffset * 0.1;
-    const opacity = 1 - Math.abs(dragOffset) / 500;
     return {
-      transform: `translateX(${dragOffset}px) rotate(${rotate}deg)`,
-      opacity: feedbackState ? 0 : opacity,
-      transition: dragStart ? "none" : "transform 0.3s ease-out",
-      cursor: isSwiping ? "default" : "grab",
+      transform: `translateX(0px) rotate(0deg)`,
+      opacity: feedbackState ? 0 : 1,
+      transition: "none",
+      cursor: "default",
     };
   };
-
-  const rightOpacity = Math.max(0, dragOffset / 150);
-  const leftOpacity = Math.max(0, -dragOffset / 150);
 
   if (gameState === "intro") return <IntroScreen onStart={handleStart} />;
   if (gameState === "briefing")
@@ -1601,7 +1475,7 @@ export default function App() {
     );
 
   return (
-    <div className="flex flex-col h-screen bg-slate-50 font-sans max-w-md mx-auto shadow-2xl border-x border-slate-200 overflow-y-auto relative">
+    <div className="flex flex-col h-[100dvh] bg-slate-50 font-sans max-w-md mx-auto shadow-2xl border-x border-slate-200 overflow-y-auto relative">
       {/* HUD */}
       <div className="bg-white pt-8 pb-2 px-4 border-b border-slate-200 z-10 flex-none sticky top-0 shadow-sm">
         <div className="flex justify-between items-start w-full mb-4 gap-4">
@@ -1747,26 +1621,7 @@ export default function App() {
             key={currentCard.id}
             className="absolute w-full max-w-sm h-[60vh] min-h-[450px] bg-white shadow-2xl border border-slate-200 flex flex-col overflow-hidden z-20 rounded-3xl"
             style={getCardStyle()}
-            onTouchStart={onTouchStart}
-            onMouseDown={onMouseDown}
-            onMouseMove={onMouseMove}
-            onMouseUp={onEnd}
-            onMouseLeave={onEnd}
-            onTouchMove={onTouchMove}
-            onTouchEnd={onEnd}
           >
-            <div
-              className="absolute top-8 left-8 border-4 border-orange-500 text-orange-500 font-black text-4xl px-4 py-2 transform -rotate-12 z-30 pointer-events-none bg-white/90 backdrop-blur-md rounded-xl shadow-lg"
-              style={{ opacity: rightOpacity }}
-            >
-              VETO
-            </div>
-            <div
-              className="absolute top-8 right-8 border-4 border-blue-600 text-blue-600 font-black text-4xl px-4 py-2 transform rotate-12 z-30 pointer-events-none bg-white/90 backdrop-blur-md rounded-xl shadow-lg"
-              style={{ opacity: leftOpacity }}
-            >
-              PASS
-            </div>
             <div
               className={`h-32 ${currentCard.color} flex items-center justify-center text-white p-4 relative`}
             >
@@ -1834,16 +1689,15 @@ export default function App() {
               <div className="space-y-2 mt-4">
                 <div className="flex justify-between px-1">
                   <span className="text-[10px] uppercase font-bold text-slate-400">
-                    If Vetoed
+                    Action
                   </span>
                   <span className="text-[10px] uppercase font-bold text-slate-400">
-                    If Passed
+                    Impact
                   </span>
                 </div>
                 <div className="flex justify-between items-stretch gap-3">
                   <button
-                    onClick={(e) => {
-                      e.stopPropagation();
+                    onClick={() => {
                       commitSwipe("left");
                     }}
                     className="w-1/2 bg-orange-50 rounded-xl p-3 border border-orange-200 flex flex-col justify-between text-left transition-colors hover:bg-orange-100 active:scale-95"
@@ -1856,8 +1710,7 @@ export default function App() {
                     </span>
                   </button>
                   <button
-                    onClick={(e) => {
-                      e.stopPropagation();
+                    onClick={() => {
                       commitSwipe("right");
                     }}
                     className="w-1/2 bg-blue-50 rounded-xl p-3 border border-blue-200 flex flex-col justify-between text-right items-end transition-colors hover:bg-blue-100 active:scale-95"
